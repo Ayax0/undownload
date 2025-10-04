@@ -1,15 +1,13 @@
 import { defineDriver } from "./utils/index.ts";
 import { Readable } from "node:stream";
 
-export const DRIVER_NAME = "http";
-
 export interface HTTPOptions extends RequestInit {
   path: string;
 }
 
 export default defineDriver((opts: HTTPOptions) => {
   return {
-    name: DRIVER_NAME,
+    name: "http",
     async download(offset?: number) {
       const { body } = await fetch(opts.path, {
         ...opts,

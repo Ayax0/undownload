@@ -1,6 +1,7 @@
 node_modules
 coverage
 dist
+/drivers
 .data
 .vscode
 .DS_Store

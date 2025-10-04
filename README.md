@@ -40,9 +40,9 @@ Example:
 
 ```ts
 import { createDownload } from "@nextlvlup/undownload";
-import httpDriver from "@nextlvlup/undownload/driver/http";
-// import ftpDriver from "@nextlvlup/undownload/driver/ftp";
-// import sftpDriver from "@nextlvlup/undownload/driver/sftp";
+import httpDriver from "@nextlvlup/undownload/drivers/http";
+// import ftpDriver from "@nextlvlup/undownload/drivers/ftp";
+// import sftpDriver from "@nextlvlup/undownload/drivers/sftp";
 
 const download = createDownload({
   base: "~/Downloads",

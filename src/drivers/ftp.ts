@@ -2,15 +2,13 @@ import { Readable } from "node:stream";
 import { defineDriver } from "./utils/index.ts";
 import Client from "ftp";
 
-export const DRIVER_NAME = "ftp";
-
 export interface FTPOptions extends Client.Options {
   path: string;
 }
 
 export default defineDriver((opts: FTPOptions) => {
   return {
-    name: DRIVER_NAME,
+    name: "ftp",
     download(offset?: number) {
       const client = new Client();
       return new Promise<Readable>((resolve, reject) => {
