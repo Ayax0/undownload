@@ -1,9 +1,9 @@
-# packageName
+# undownload
 
 <!-- automd:badges color=yellow -->
 
-[![npm version](https://img.shields.io/npm/v/undownload?color=yellow)](https://npmjs.com/package/undownload)
-[![npm downloads](https://img.shields.io/npm/dm/undownload?color=yellow)](https://npm.chart.dev/undownload)
+[![npm version](https://img.shields.io/npm/v/@nextlvlup/undownload?color=yellow)](https://npmjs.com/package/@nextlvlup/undownload)
+[![npm downloads](https://img.shields.io/npm/dm/@nextlvlup/undownload?color=yellow)](https://npm.chart.dev/@nextlvlup/undownload)
 
 <!-- /automd -->
 
@@ -20,18 +20,18 @@ npx nypm install packageName
 
 Import:
 
-<!-- automd:jsimport cdn name="pkg" -->
+<!-- automd:jsimport cdn name="@nextlvlup/undownload" -->
 
 **ESM** (Node.js, Bun, Deno)
 
 ```js
-import {} from "pkg";
+import {} from "@nextlvlup/undownload";
 ```
 
 **CDN** (Deno and Browsers)
 
 ```js
-import {} from "https://esm.sh/pkg";
+import {} from "https://esm.sh/@nextlvlup/undownload";
 ```
 
 <!-- /automd -->
