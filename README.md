@@ -15,7 +15,7 @@ Install the package:
 
 ```sh
 # ✨ Auto-detect (supports npm, yarn, pnpm, deno and bun)
-npx nypm install packageName
+npx nypm install @nextlvlup/undownload
 ```
 
 Import:
@@ -35,6 +35,30 @@ import {} from "https://esm.sh/@nextlvlup/undownload";
 ```
 
 <!-- /automd -->
+
+Example:
+
+```ts
+import { createDownload } from "@nextlvlup/undownload";
+import httpDriver from "@nextlvlup/undownload/driver/http";
+// import ftpDriver from "@nextlvlup/undownload/driver/ftp";
+// import sftpDriver from "@nextlvlup/undownload/driver/sftp";
+
+const download = createDownload({
+  base: "~/Downloads",
+  key: "BigBuckBunny.mp4",
+  driver: httpDriver({
+    path: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  }),
+});
+
+download.on("end", () => console.log("Download completed"));
+download.on("error", (err) => console.error("Download error:", err));
+download.on("data", (chunk) => console.log("Downloaded chunk:", chunk.length));
+
+download.stop(); // To stop the download if needed
+await download.promise; // To await the completion of the download
+```
 
 ## Development
 
