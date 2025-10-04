@@ -20,5 +20,5 @@ export default defineBuildConfig({
       declaration: false,
     },
   ],
-  externals: [/@nextlvlup\/undownload\/drivers\//]
+  externals: [/@nextlvlup\/undownload\/drivers\//],
 });
