@@ -53,8 +53,8 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     if (meta && meta.size > 0) {
       const remoteSize = await opts.driver.size();
       if (meta.size === remoteSize) {
-        events.emit("end");
         status = "complete";
+        events.emit("end");
         return;
       }
     }
@@ -69,8 +69,8 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       rs = await driver.download(meta?.size);
       rs.on("data", (chunk) => events.emit("data", chunk));
       rs.on("end", () => {
-        events.emit("end");
         status = "complete";
+        events.emit("end");
       });
 
       await pipeline(rs, ws, { signal: controller.signal });
@@ -79,9 +79,9 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       // Normalize non-Error throwables
       const errorObj = error instanceof Error ? error : new Error(String(error));
 
+      status = "error";
       controller.abort();
       events.emit("error", errorObj);
-      status = "error";
 
       throw errorObj;
     }
@@ -93,8 +93,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       const fileStream = createReadStream(path);
 
       await pipeline(fileStream, hashStream);
-      const computedHash = hashStream.digest("hex");
-      return computedHash === hash;
+      return hash === hashStream.digest("hex");
     } catch {
       return false;
     }
