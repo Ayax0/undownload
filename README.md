@@ -21,24 +21,6 @@ Install the package:
 npx nypm install @nextlvlup/undownload
 ```
 
-Import:
-
-<!-- automd:jsimport cdn name="@nextlvlup/undownload" -->
-
-**ESM** (Node.js, Bun, Deno)
-
-```js
-import {} from "@nextlvlup/undownload";
-```
-
-**CDN** (Deno and Browsers)
-
-```js
-import {} from "https://esm.sh/@nextlvlup/undownload";
-```
-
-<!-- /automd -->
-
 Example:
 
 ```ts
