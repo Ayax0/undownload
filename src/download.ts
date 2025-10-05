@@ -1,6 +1,6 @@
 import type { Driver } from "./types.ts";
 import type { Readable, Writable } from "node:stream";
-import { createWriteStream, statSync } from "node:fs";
+import { createWriteStream, stat, statSync } from "node:fs";
 import { join } from "node:path";
 import { pipeline } from "node:stream/promises";
 import { randomUUID } from "node:crypto";
@@ -18,6 +18,8 @@ export interface DownloadEvents {
   error: [Error];
 }
 
+export type DownloadStatus = "idle" | "pending" | "error" | "complete";
+
 export interface Download {
   promise: Promise<void>;
   on<U extends keyof DownloadEvents>(
@@ -29,6 +31,7 @@ export interface Download {
     listener: (...args: DownloadEvents[U]) => void,
   ): void;
   stop(): void;
+  status(): DownloadStatus;
 }
 
 export function createDownload(opts: CreateDownloadOptions): Download {
@@ -39,6 +42,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     key ?? randomUUID().toString(),
   );
 
+  let status: DownloadStatus = "idle";
   const controller = new AbortController();
   const events = new EventEmitter<DownloadEvents>();
 
@@ -49,11 +53,13 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       const remoteSize = await opts.driver.size();
       if (meta.size === remoteSize) {
         events.emit("end");
+        status = "complete";
         return;
       }
     }
 
     // Start download
+    status = "pending";
     let rs: Readable | undefined;
     let ws: Writable | undefined;
 
@@ -61,7 +67,10 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       ws = createWriteStream(path, { flags: "a" });
       rs = await driver.download(meta?.size);
       rs.on("data", (chunk) => events.emit("data", chunk));
-      rs.on("end", () => events.emit("end"));
+      rs.on("end", () => {
+        events.emit("end");
+        status = "complete";
+      });
 
       await pipeline(rs, ws, { signal: controller.signal });
     } catch (error) {
@@ -69,6 +78,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       if (controller.signal.aborted && isAbortError(error)) return;
       controller.abort();
       events.emit("error", error);
+      status = "error";
     }
   }
 
@@ -79,6 +89,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     on: events.on.bind(events),
     off: events.off.bind(events),
     stop: controller.abort.bind(controller),
+    status: () => status,
   };
 }
 
