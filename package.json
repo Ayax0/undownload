@@ -45,14 +45,12 @@
     "eslint-config-unjs": "^0.5.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.2",
+    "unbuild": "^3.6.1",
     "vitest": "^3.2.4"
   },
   "packageManager": "pnpm@10.15.0",
   "peerDependencies": {
     "ftp": "^0.3.10",
     "ssh2-sftp-client": "^12.0.1"
-  },
-  "dependencies": {
-    "unbuild": "^3.6.1"
   }
 }
