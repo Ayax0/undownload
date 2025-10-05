@@ -1,6 +1,6 @@
 {
   "name": "@nextlvlup/undownload",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Universal download utility for Node.js",
   "repository": "Ayax0/undownload",
   "license": "MIT",
