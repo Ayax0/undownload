@@ -2,14 +2,14 @@ import { defineDriver } from "./utils/index.ts";
 import { Readable } from "node:stream";
 
 export interface HTTPOptions extends RequestInit {
-  path: string;
+  url: string;
 }
 
 export default defineDriver((opts: HTTPOptions) => {
   return {
     name: "http",
     async download(offset?: number) {
-      const { body } = await fetch(opts.path, {
+      const { body } = await fetch(opts.url, {
         ...opts,
         headers: { Range: `bytes=${offset}-` },
       });
@@ -17,7 +17,7 @@ export default defineDriver((opts: HTTPOptions) => {
       return Readable.fromWeb(body);
     },
     async size() {
-      const head = await fetch(opts.path, { method: "HEAD" });
+      const head = await fetch(opts.url, { method: "HEAD" });
       const length = head.headers.get("content-length");
       return length
         ? Number.parseInt(length, 10)

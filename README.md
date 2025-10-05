@@ -33,7 +33,7 @@ const download = createDownload({
   base: "~/Downloads",
   key: "BigBuckBunny.mp4",
   driver: httpDriver({
-    path: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
   }),
 });
 
