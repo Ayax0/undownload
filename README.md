@@ -41,8 +41,17 @@ download.on("end", () => console.log("Download completed"));
 download.on("error", (err) => console.error("Download error:", err));
 download.on("data", (chunk) => console.log("Downloaded chunk:", chunk.length));
 
-download.stop(); // To stop the download if needed
-await download.promise; // To await the completion of the download
+// To stop the download if needed
+download.stop();
+// To check the status
+download.status();
+// To await the completion of the download
+await download.promise;
+// To validate the file after completion
+await download.validate(
+  "sha256",
+  "1cadc5e09cbb81044e256f9fc67090fcf86d7a596145eb615844fe15341451e6",
+);
 ```
 
 ## Development
