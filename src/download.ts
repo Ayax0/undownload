@@ -1,6 +1,6 @@
 import type { Driver } from "./types.ts";
 import type { Readable, Writable } from "node:stream";
-import { createWriteStream, stat, statSync } from "node:fs";
+import { createWriteStream, statSync } from "node:fs";
 import { join } from "node:path";
 import { pipeline } from "node:stream/promises";
 import { randomUUID } from "node:crypto";
@@ -74,11 +74,15 @@ export function createDownload(opts: CreateDownloadOptions): Download {
 
       await pipeline(rs, ws, { signal: controller.signal });
     } catch (error) {
-      if (!(error instanceof Error)) return;
       if (controller.signal.aborted && isAbortError(error)) return;
+      // Normalize non-Error throwables
+      const errorObj = error instanceof Error ? error : new Error(String(error));
+
       controller.abort();
-      events.emit("error", error);
+      events.emit("error", errorObj);
       status = "error";
+
+      throw errorObj;
     }
   }
 
