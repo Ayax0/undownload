@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.7
+
+[compare changes](https://github.com/Ayax0/undownload/compare/v0.0.6...v0.0.7)
+
+### 🩹 Fixes
+
+- Change driver utils import path ([0672346](https://github.com/Ayax0/undownload/commit/0672346))
+
+### ❤️ Contributors
+
+- Simon Gander <sg@vtt.ch>
+
 ## v0.0.6
 
 [compare changes](https://github.com/Ayax0/undownload/compare/v0.0.5...v0.0.6)
