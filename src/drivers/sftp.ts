@@ -1,4 +1,4 @@
-import { defineDriver } from "./utils/index.ts";
+import { defineDriver } from "./utils";
 import Client from "ssh2-sftp-client";
 
 export interface SFTPOptions extends Client.ConnectOptions {

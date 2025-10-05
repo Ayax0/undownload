@@ -1,4 +1,4 @@
-import { defineDriver } from "./utils/index.ts";
+import { defineDriver } from "./utils";
 import { Readable } from "node:stream";
 
 export interface HTTPOptions extends RequestInit {

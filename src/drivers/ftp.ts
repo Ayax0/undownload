@@ -1,5 +1,5 @@
 import { Readable } from "node:stream";
-import { defineDriver } from "./utils/index.ts";
+import { defineDriver } from "./utils";
 import Client from "ftp";
 
 export interface FTPOptions extends Client.Options {
