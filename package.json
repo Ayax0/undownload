@@ -52,5 +52,13 @@
   "peerDependencies": {
     "ftp": "^0.3.10",
     "ssh2-sftp-client": "^12.0.1"
+  },
+  "peerDependenciesMeta": {
+    "ftp": {
+      "optional": true
+    },
+    "ssh2-sftp-client": {
+      "optional": true
+    }
   }
 }
