@@ -1,10 +1,10 @@
 import type { Driver } from "./types.ts";
 import type { Readable, Writable } from "node:stream";
-import { createWriteStream, statSync } from "node:fs";
 import { join } from "node:path";
 import { pipeline } from "node:stream/promises";
-import { randomUUID } from "node:crypto";
 import { EventEmitter } from "node:stream";
+import { createHash, randomUUID } from "node:crypto";
+import { createReadStream, createWriteStream, statSync } from "node:fs";
 
 export interface CreateDownloadOptions {
   driver: Driver;
@@ -32,6 +32,7 @@ export interface Download {
   ): void;
   stop(): void;
   status(): DownloadStatus;
+  validate(algorithm: string, hash: string): Promise<boolean>;
 }
 
 export function createDownload(opts: CreateDownloadOptions): Download {
@@ -86,6 +87,19 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     }
   }
 
+  async function validate(algorithm: string, hash: string) {
+    try {
+      const hashStream = createHash(algorithm);
+      const fileStream = createReadStream(path);
+
+      await pipeline(fileStream, hashStream);
+      const computedHash = hashStream.digest("hex");
+      return computedHash === hash;
+    } catch {
+      return false;
+    }
+  }
+
   const promise = run();
 
   return {
@@ -94,6 +108,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     off: events.off.bind(events),
     stop: controller.abort.bind(controller),
     status: () => status,
+    validate
   };
 }
 
