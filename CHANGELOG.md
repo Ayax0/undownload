@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.8
+
+[compare changes](https://github.com/Ayax0/undownload/compare/v0.0.7...v0.0.8)
+
+### 🩹 Fixes
+
+- Fix EventEmitter import ([96c50fd](https://github.com/Ayax0/undownload/commit/96c50fd))
+
+### ❤️ Contributors
+
+- Simon Gander <sg@vtt.ch>
+
 ## v0.0.7
 
 [compare changes](https://github.com/Ayax0/undownload/compare/v0.0.6...v0.0.7)
