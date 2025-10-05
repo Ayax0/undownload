@@ -2,7 +2,7 @@ import type { Driver } from "./types.ts";
 import type { Readable, Writable } from "node:stream";
 import { join } from "node:path";
 import { pipeline } from "node:stream/promises";
-import { EventEmitter } from "node:stream";
+import { EventEmitter } from "node:events";
 import { createHash, randomUUID } from "node:crypto";
 import { createReadStream, createWriteStream, statSync } from "node:fs";
 
