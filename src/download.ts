@@ -77,7 +77,8 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     } catch (error) {
       if (controller.signal.aborted && isAbortError(error)) return;
       // Normalize non-Error throwables
-      const errorObj = error instanceof Error ? error : new Error(String(error));
+      const errorObj =
+        error instanceof Error ? error : new Error(String(error));
 
       status = "error";
       controller.abort();
@@ -107,7 +108,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     off: events.off.bind(events),
     stop: controller.abort.bind(controller),
     status: () => status,
-    validate
+    validate,
   };
 }
 

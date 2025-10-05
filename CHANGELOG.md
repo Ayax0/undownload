@@ -1,8 +1,6 @@
 # Changelog
 
-
 ## v0.0.4
-
 
 ### 🩹 Fixes
 
@@ -17,4 +15,3 @@
 ### ❤️ Contributors
 
 - Simon Gander <sg@vtt.ch>
-
