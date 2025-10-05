@@ -7,7 +7,10 @@
 
 <!-- /automd -->
 
-This is my package description.
+A universal download utility for Node.js.
+It provides a simple and flexible interface to download files from the internet using different protocols.
+Its driver-based approach allows you to use different protocols with the same underlying syntax and functionality.
+This package was inspired by [unstorage](https://github.com/unjs/unstorage).
 
 ## Usage
 
