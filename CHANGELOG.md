@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.11
+
+[compare changes](https://github.com/Ayax0/undownload/compare/v0.0.10...v0.0.11)
+
+### 🩹 Fixes
+
+- Fix restart check ([307aa39](https://github.com/Ayax0/undownload/commit/307aa39))
+
+### ❤️ Contributors
+
+- Simon Gander <sg@vtt.ch>
+
 ## v0.0.10
 
 [compare changes](https://github.com/Ayax0/undownload/compare/v0.0.9...v0.0.10)
