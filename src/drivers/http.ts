@@ -17,7 +17,7 @@ export default defineDriver((opts: HTTPOptions) => {
       return Readable.fromWeb(body);
     },
     async size() {
-      const head = await fetch(opts.url, { method: "HEAD" });
+      const head = await fetch(opts.url, { ...opts, method: "HEAD" });
       const length = head.headers.get("content-length");
       return length
         ? Number.parseInt(length, 10)
