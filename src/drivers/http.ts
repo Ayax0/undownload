@@ -18,7 +18,9 @@ export default defineDriver((opts: HTTPOptions) => {
     },
     async size() {
       const head = await fetch(opts.url, { ...opts, method: "HEAD" });
-      const length = head.headers.get("proxy-content-length") || head.headers.get("content-length");
+      const length =
+        head.headers.get("proxy-content-length") ||
+        head.headers.get("content-length");
       return length
         ? Number.parseInt(length, 10)
         : Promise.reject(

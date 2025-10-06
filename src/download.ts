@@ -61,7 +61,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     const meta = statSync(path, { throwIfNoEntry: false });
     if (meta && meta.size > 0) {
       const remoteSize = await opts.driver.size();
-      
+
       if (remoteSize > meta.size) unlinkSync(path);
       if (meta.size === remoteSize) {
         status = "complete";
