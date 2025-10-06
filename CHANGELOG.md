@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.0.9
+
+[compare changes](https://github.com/Ayax0/undownload/compare/v0.0.8...v0.0.9)
+
+### 🚀 Enhancements
+
+- Add possibility to disable immediate start ([773a132](https://github.com/Ayax0/undownload/commit/773a132))
+
+### ❤️ Contributors
+
+- Simon Gander <sg@vtt.ch>
+
 ## v0.0.8
 
 [compare changes](https://github.com/Ayax0/undownload/compare/v0.0.7...v0.0.8)
