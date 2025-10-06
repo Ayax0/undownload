@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.0.10
+
+[compare changes](https://github.com/Ayax0/undownload/compare/v0.0.9...v0.0.10)
+
+### 🚀 Enhancements
+
+- Allow proxy-content-length as header ([2532239](https://github.com/Ayax0/undownload/commit/2532239))
+
+### 🩹 Fixes
+
+- Pass options to http head request ([f46aad0](https://github.com/Ayax0/undownload/commit/f46aad0))
+
+### 🏡 Chore
+
+- Fix formatting ([a875ba3](https://github.com/Ayax0/undownload/commit/a875ba3))
+
+### ❤️ Contributors
+
+- Simon Gander <sg@vtt.ch>
+
 ## v0.0.9
 
 [compare changes](https://github.com/Ayax0/undownload/compare/v0.0.8...v0.0.9)
