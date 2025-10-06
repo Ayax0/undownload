@@ -30,6 +30,7 @@ import httpDriver from "@nextlvlup/undownload/drivers/http";
 // import sftpDriver from "@nextlvlup/undownload/drivers/sftp";
 
 const download = createDownload({
+  immediate: false, // Default: true -> Download starts automatically
   base: "~/Downloads",
   key: "BigBuckBunny.mp4",
   driver: httpDriver({
@@ -41,12 +42,13 @@ download.on("end", () => console.log("Download completed"));
 download.on("error", (err) => console.error("Download error:", err));
 download.on("data", (chunk) => console.log("Downloaded chunk:", chunk.length));
 
-// To stop the download if needed
-download.stop();
-// To check the status
-download.status();
-// To await the completion of the download
-await download.promise;
+download.start(); // To start the download if immediate = false
+download.stop(); // To stop the download if needed
+download.status(); // To check the status
+download.restart(); // Discards already downloaded data and starts over
+
+await download.promise; // To await the completion of the download
+
 // To validate the file after completion
 await download.validate(
   "sha256",

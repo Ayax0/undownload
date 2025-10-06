@@ -4,12 +4,18 @@ import { join } from "node:path";
 import { pipeline } from "node:stream/promises";
 import { EventEmitter } from "node:events";
 import { createHash, randomUUID } from "node:crypto";
-import { createReadStream, createWriteStream, statSync } from "node:fs";
+import {
+  createReadStream,
+  createWriteStream,
+  statSync,
+  unlinkSync,
+} from "node:fs";
 
 export interface CreateDownloadOptions {
   driver: Driver;
   key?: string;
   base?: string;
+  immediate?: boolean;
 }
 
 export interface DownloadEvents {
@@ -21,7 +27,7 @@ export interface DownloadEvents {
 export type DownloadStatus = "idle" | "pending" | "error" | "complete";
 
 export interface Download {
-  promise: Promise<void>;
+  promise: Promise<void> | undefined;
   on<U extends keyof DownloadEvents>(
     event: U,
     listener: (...args: DownloadEvents[U]) => void,
@@ -31,7 +37,9 @@ export interface Download {
     listener: (...args: DownloadEvents[U]) => void,
   ): void;
   stop(): void;
+  start(): Promise<void>;
   status(): DownloadStatus;
+  restart(): Promise<void>;
   validate(algorithm: string, hash: string): Promise<boolean>;
 }
 
@@ -44,6 +52,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
   );
 
   let status: DownloadStatus = "idle";
+  let promise: Promise<void> | undefined;
   const controller = new AbortController();
   const events = new EventEmitter<DownloadEvents>();
 
@@ -88,6 +97,19 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     }
   }
 
+  async function start() {
+    if (status === "pending") return promise;
+    status = "idle";
+    promise = run();
+    return promise;
+  }
+
+  function restart() {
+    if (status === "pending") controller.abort();
+    unlinkSync(path);
+    return start();
+  }
+
   async function validate(algorithm: string, hash: string) {
     try {
       const hashStream = createHash(algorithm);
@@ -100,14 +122,16 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     }
   }
 
-  const promise = run();
+  promise = opts.immediate === false ? undefined : run();
 
   return {
     promise,
     on: events.on.bind(events),
     off: events.off.bind(events),
     stop: controller.abort.bind(controller),
+    start,
     status: () => status,
+    restart,
     validate,
   };
 }
