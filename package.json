@@ -3,6 +3,7 @@
   "version": "0.0.11",
   "description": "Universal download utility for Node.js",
   "repository": "Ayax0/undownload",
+  "keywords": ["node", "download", "ftp", "sftp", "http", "https", "utility", "universal"],
   "license": "MIT",
   "sideEffects": false,
   "exports": {
