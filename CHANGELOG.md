@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.0.12
+
+[compare changes](https://github.com/Ayax0/undownload/compare/v0.0.11...v0.0.12)
+
+### 📖 Documentation
+
+- Update README ([f5dfe20](https://github.com/Ayax0/undownload/commit/f5dfe20))
+
+### ✅ Tests
+
+- Add tests for download ([1773983](https://github.com/Ayax0/undownload/commit/1773983))
+
+### ❤️ Contributors
+
+- Simon Gander <sg@vtt.ch>
+
 ## v0.0.11
 
 [compare changes](https://github.com/Ayax0/undownload/compare/v0.0.10...v0.0.11)
