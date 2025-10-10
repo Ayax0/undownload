@@ -47,14 +47,11 @@ export interface Download {
 export function createDownload(opts: CreateDownloadOptions): Download {
   const { driver, base, key } = opts;
 
-  const path = join(
-    base ?? ".data/resource/.cache",
-    key ?? randomUUID().toString(),
-  );
+  const path = join(base ?? ".data", key ?? randomUUID().toString());
 
   let status: DownloadStatus = "idle";
   let promise: Promise<void> | undefined;
-  const controller = new AbortController();
+  let controller: AbortController = new AbortController();
   const events = new EventEmitter<DownloadEvents>();
 
   async function run() {
@@ -89,7 +86,11 @@ export function createDownload(opts: CreateDownloadOptions): Download {
 
       await pipeline(rs, ws, { signal: controller.signal });
     } catch (error) {
-      if (controller.signal.aborted && isAbortError(error)) return;
+      if (controller.signal.aborted && isAbortError(error)) {
+        status = "idle";
+        promise = undefined;
+        return;
+      }
       // Normalize non-Error throwables
       const errorObj =
         error instanceof Error ? error : new Error(String(error));
@@ -105,6 +106,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
 
   function start() {
     if (status === "pending" && promise) return promise;
+    controller = new AbortController();
     status = "idle";
     promise = run();
     return promise;
@@ -134,7 +136,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     promise,
     on: events.on.bind(events),
     off: events.off.bind(events),
-    stop: controller.abort.bind(controller),
+    stop: () => controller.abort(),
     start,
     status: () => status,
     remove,
