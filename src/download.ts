@@ -10,6 +10,7 @@ import {
   statSync,
   unlinkSync,
 } from "node:fs";
+import { unlink } from "node:fs/promises";
 
 export interface CreateDownloadOptions {
   driver: Driver;
@@ -39,7 +40,7 @@ export interface Download {
   stop(): void;
   start(): Promise<void>;
   status(): DownloadStatus;
-  restart(): Promise<void>;
+  remove(): Promise<void>;
   validate(algorithm: string, hash: string): Promise<boolean>;
 }
 
@@ -65,6 +66,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       if (remoteSize < meta.size) unlinkSync(path);
       if (meta.size === remoteSize) {
         status = "complete";
+        promise = undefined;
         events.emit("end");
         return;
       }
@@ -81,6 +83,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
       rs.on("data", (chunk) => events.emit("data", chunk));
       rs.on("end", () => {
         status = "complete";
+        promise = undefined;
         events.emit("end");
       });
 
@@ -92,6 +95,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
         error instanceof Error ? error : new Error(String(error));
 
       status = "error";
+      promise = undefined;
       controller.abort();
       events.emit("error", errorObj);
 
@@ -99,17 +103,17 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     }
   }
 
-  async function start() {
-    if (status === "pending") return promise;
+  function start() {
+    if (status === "pending" && promise) return promise;
     status = "idle";
     promise = run();
     return promise;
   }
 
-  function restart() {
+  function remove() {
     if (status === "pending") controller.abort();
-    unlinkSync(path);
-    return start();
+    status = "idle";
+    return unlink(path);
   }
 
   async function validate(algorithm: string, hash: string) {
@@ -133,7 +137,7 @@ export function createDownload(opts: CreateDownloadOptions): Download {
     stop: controller.abort.bind(controller),
     start,
     status: () => status,
-    restart,
+    remove,
     validate,
   };
 }
