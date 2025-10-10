@@ -77,7 +77,7 @@ download.on("data", (chunk) => console.log("Downloaded chunk:", chunk.length));
 download.start(); // To start the download if immediate = false
 download.stop(); // To stop the download if needed
 download.status(); // To check the status
-download.restart(); // Discards already downloaded data and starts over
+download.remove(); // Discards already downloaded data
 
 await download.promise; // To await the completion of the download
 
