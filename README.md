@@ -15,21 +15,13 @@ This package was inspired by [unstorage](https://github.com/unjs/unstorage).
 ## Features
 
 - 🌐 Multi-protocol download support — Seamlessly handle downloads over HTTP, HTTPS, FTP, and SFTP.
-
 - 🔁 Resumable downloads — Automatically resume interrupted downloads without starting over.
-
 - ⚡ Asynchronous downloading — Built on async/await for non-blocking, concurrent operations.
-
 - 🧩 Checksum validation — Verify file integrity using MD5, SHA1, SHA256, or custom hash algorithms.
-
 - 📏 File size verification — Compare local and remote file sizes to ensure complete downloads.
-
 - 💾 Stream-based architecture — Efficient memory usage even with large files.
-
 - 🧠 Promise-based API — Clean, modern, and easy to integrate with any Node.js application.
-
 - 📦 Lightweight dependency footprint — Optimized for speed and minimal package size.
-
 - 🧰 Extensible design — Add your own protocols, validation methods, or custom download logic easily.
 
 ## Usage
